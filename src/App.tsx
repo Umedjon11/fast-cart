@@ -18,7 +18,7 @@ const Contact = lazy(() => import('./pages/contact'))
 const App = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<CircularProgress className='m-[20vh_aut0]' size={200} />}>
+      <Suspense fallback={<CircularProgress className='m-[20vh_40%]' size={100} />}>
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
