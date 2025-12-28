@@ -1,4 +1,3 @@
-import React from "react";
 import GoogleIcon from "../assets/Icon-Google.png";
 import { Link } from "react-router";
 

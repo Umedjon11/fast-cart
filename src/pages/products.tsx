@@ -9,7 +9,7 @@ function valuetext(value: number) {
 const Products = () => {
   const [value, setValue] = useState<number[]>([20, 37]);
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
+  const handleChange = (newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
 
