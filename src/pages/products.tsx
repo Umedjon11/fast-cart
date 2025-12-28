@@ -15,7 +15,7 @@ const Products = () => {
   };
 
   return (
-    <div className="space-y-6 p-4">
+    <div className="p-4">
       {/* Заголовок и сортировка */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-gray-800">
