@@ -2,6 +2,7 @@ import { CircularProgress } from '@mui/material'
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from "react-router"
 import Layout from './pages/layout'
+import './App.css'
 
 const Home = lazy(() => import('./pages/home'))
 const Login = lazy(() => import('./pages/login'))
@@ -19,7 +20,7 @@ const Notfound = lazy(() => import('./pages/notfound'))
 const App = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<CircularProgress className='m-[20vh_40%]' size={100} />}>
+      <Suspense fallback={<CircularProgress className='m-[40vh_40%] sm:m-[40vh_46.5%]' size={100} />}>
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
