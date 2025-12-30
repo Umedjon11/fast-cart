@@ -1,13 +1,16 @@
 import Logo from "../assets/Logo.png"
 import { Link, useLocation, useNavigate } from "react-router"
 import { Heart, LogOut, Menu as MenuDes, Search, ShoppingBag, ShoppingCart, User } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Drawer, Menu, MenuItem } from "@mui/material"
 import { GetToken } from "../../utils/axios"
+import { useCart } from "../store/cart"
 
 const Header = () => {
   const location = useLocation()
   const navigation = useNavigate()
+
+  const { cartProducts, GetCartProducts } = useCart((state: any) => state)
 
   const [open, setOpen] = useState(false);
 
@@ -25,6 +28,12 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if (token) {
+      GetCartProducts()
+    }
+  }, [token])
 
   return (
     <div className="flex p-[2vh_5%] w-full border-b-[#0000001A] border-b justify-between m-[0_auto] items-center">
@@ -52,7 +61,8 @@ const Header = () => {
                 <Search className="cursor-pointer" />
             </div>
             <Heart className="hidden sm:block" />
-            <ShoppingCart />
+            <ShoppingCart onClick={() => navigation("/cart")} />
+            {cartProducts.length > 0 && (<p className="bg-[red] absolute ml-[25.3%] mt-[-3vh] text-white p-[2px_7px] text-[10px] rounded-4xl">{cartProducts.length}</p>)}
             {token && (<button onClick={(e: any) => handleClick(e)} className={openMenu ? "cursor-pointer text-white bg-[#DB4444] p-3 rounded-4xl" : "cursor-pointer text-black p-3 rounded-4xl"}><User /></button>)}
             <Menu
               id="basic-menu"
