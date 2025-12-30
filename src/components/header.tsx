@@ -61,7 +61,14 @@ const Header = () => {
                 <Search className="cursor-pointer" />
             </div>
             <Heart className="hidden sm:block" />
-            <ShoppingCart onClick={() => navigation("/cart")} />
+            <ShoppingCart onClick={() => {
+              if(token) {
+                navigation("/cart")
+              }
+              else {
+                navigation("/register")
+              }
+            }} />
             {cartProducts.length > 0 && (<p className="bg-[red] absolute ml-[25.3%] mt-[-3vh] text-white p-[2px_7px] text-[10px] rounded-4xl">{cartProducts.length}</p>)}
             {token && (<button onClick={(e: any) => handleClick(e)} className={openMenu ? "cursor-pointer text-white bg-[#DB4444] p-3 rounded-4xl" : "cursor-pointer text-black p-3 rounded-4xl"}><User /></button>)}
             <Menu
