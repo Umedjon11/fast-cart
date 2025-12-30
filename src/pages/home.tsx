@@ -13,7 +13,7 @@ import { useCart } from '../store/cart';
 const Home = () => {
 
   const { products, GetProducts, isLoading } = useProducts((state: any) => state)
-  const { categories, GetCateries, isLoadingCategory } = useCategories((state: any) => state)
+  const { categories, GetCateries } = useCategories((state: any) => state)
   const { AddProductToCart } = useCart((state: any) => state)
 
   const token = GetToken()
