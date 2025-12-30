@@ -10,13 +10,12 @@ const Products = () => {
   const [value, setValue] = useState<number[]>([20, 37]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
-    console.log(event)
+    console.log(event);
     setValue(newValue as number[]);
   };
 
   return (
-    <div className="p-4">
-      {/* Заголовок и сортировка */}
+    <div className="p-4 flex flex-col gap-[2vh]">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-gray-800">
           Explore Our Products
@@ -29,7 +28,6 @@ const Products = () => {
         </select>
       </div>
 
-      {/* Категории */}
       <div className="w-[380px] border border-gray-200 rounded-md p-3">
         <div className="flex justify-between items-center cursor-pointer">
           <p className="font-medium text-gray-700">Category</p>
@@ -52,7 +50,6 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Brands */}
       <div className="w-[380px] border border-gray-200 rounded-md p-3">
         <div className="flex justify-between items-center cursor-pointer">
           <p className="font-medium text-gray-700">Brands</p>
@@ -75,7 +72,6 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Features */}
       <div className="w-[380px] border border-gray-200 rounded-md p-3">
         <div className="flex justify-between items-center cursor-pointer">
           <p className="font-medium text-gray-700">Features</p>
@@ -104,7 +100,6 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Price Range */}
       <div className="w-[380px] border border-gray-200 rounded-md p-3">
         <div className="flex justify-between items-center">
           <p className="font-medium text-gray-700">Price range</p>
@@ -141,7 +136,6 @@ const Products = () => {
         </button>
       </div>
 
-      {/* Ratings */}
       <div className="w-[380px] border border-gray-200 rounded-md p-3">
         <div className="flex justify-between items-center cursor-pointer">
           <p className="font-medium text-gray-700">Ratings</p>
