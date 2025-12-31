@@ -6,6 +6,7 @@ import { Axios } from "../../utils/axios";
 export const useCart = create((set, get: any) => ({
     isLoadingCart: true,
     cartProducts: [],
+    totalPrice: 0,
     GetCartProducts: async () => {
         set(() => ({isLoadingCart: true}))
         set(() => ({cartProducts: []}))
@@ -13,9 +14,11 @@ export const useCart = create((set, get: any) => ({
             const { data } = await Axios.get("https://store-api.softclub.tj/Cart/get-products-from-cart")
             set(() => ({isLoadingCart: false}))
             set(() => ({cartProducts: data.data[0].productsInCart}))
+            set(() => ({totalPrice: data.data[0].totalDiscountPrice}))
         } catch (error) {
             set(() => ({isLoadingCart: false}))
             set(() => ({cartProducts: []}))
+            set(() => ({totalPrice: 0}))
         }
     },
     AddProductToCart: async (id: number) => {
