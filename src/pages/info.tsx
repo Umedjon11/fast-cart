@@ -1,106 +1,99 @@
-import ImageMain from "../assets/InfoImg.png";
-import ImageThumb1 from "../assets/Frame 895.png";
-import ImageThumb2 from "../assets/Frame 919.png";
-import ImageThumb3 from "../assets/Frame 897.png";
-import ImageThumb4 from "../assets/Frame 919.png";
-import Star from "../assets/Frame 922.png";
-import ColorSample from "../assets/Colour Chnage.png";
+import { useProducts } from "../store/products";
+import { useNavigate, useParams } from "react-router";
+import { useEffect, useState } from "react";
+import { GetToken } from "../../utils/axios";
+import { CircularProgress, Rating } from "@mui/material";
+import { Heart, Minus, Plus, RefreshCcw, StarIcon, Van } from "lucide-react";
+import { useCart } from "../store/cart";
 
 const Info = () => {
+
+  const {isLoadingById, productById, GetProductsById} = useProducts((state: any) => state)
+  const [image, setImage] = useState<null | string>(null)
+  const { AddProductToCart } = useCart((state: any) => state)
+  const { id } = useParams()
+  const [quty, setQuty] = useState(1)
+  const token = GetToken()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    GetProductsById(id)
+  }, [])
+
   return (
-    <div className="flex flex-col md:flex-row justify-center gap-10 p-10">
-      <div className="flex gap-5">
-        <div className="flex flex-col gap-4">
-          <img
-            src={ImageThumb1}
-            alt="thumb1"
-            className="w-20 h-20 object-cover rounded cursor-pointer hover:ring-2 hover:ring-blue-500"
-          />
-          <img
-            src={ImageThumb2}
-            alt="thumb2"
-            className="w-20 h-20 object-cover rounded cursor-pointer hover:ring-2 hover:ring-blue-500"
-          />
-          <img
-            src={ImageThumb3}
-            alt="thumb3"
-            className="w-20 h-20 object-cover rounded cursor-pointer hover:ring-2 hover:ring-blue-500"
-          />
-          <img
-            src={ImageThumb4}
-            alt="thumb4"
-            className="w-20 h-20 object-cover rounded cursor-pointer hover:ring-2 hover:ring-blue-500"
-          />
-        </div>
-        <div>
-          <img
-            src={ImageMain}
-            alt="main"
-            className="w-96 h-96 object-cover rounded-lg shadow-md"
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-4 max-w-md">
-        <h1 className="text-2xl font-bold">Havic HV G-92 Gamepad</h1>
-
-        <div className="flex items-center gap-2">
-          <img src={Star} alt="rating" className="w-24" />
-          <span className="text-gray-500">(150 Reviews) • In Stock</span>
-        </div>
-
-        <p className="text-2xl font-bold text-green-600">$192.00</p>
-
-        <p className="text-gray-600 text-sm">
-          PlayStation 5 Controller Skin High quality vinyl with air channel
-          adhesive for easy bubble-free install & mess-free removal. Pressure
-          sensitive.
-        </p>
-
-        <div className="flex items-center gap-4 mt-2">
-          <p className="font-medium">Colours:</p>
-          <img
-            src={ColorSample}
-            alt="colors"
-            className="w-10 h-5 rounded-full cursor-pointer border"
-          />
-        </div>
-
-        <div className="flex items-center gap-2 mt-2">
-          <p className="font-medium">Size:</p>
-          {["XS", "S", "M", "L", "XL"].map((size) => (
-            <button
-              key={size}
-              className="px-3 py-1 border rounded hover:bg-gray-200"
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-4 mt-4">
-          <button className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition-colors">
-            Buy Now
-          </button>
-          <button className="border px-4 py-2 rounded hover:bg-gray-100 transition-colors">
-            ♥
-          </button>
-        </div>
-
-        <div className="mt-4 space-y-2">
-          <div className="flex items-center gap-2 text-gray-600 text-sm">
-            <span>🚚</span>
-            <p>
-              Free Delivery • Enter your postal code for delivery availability
-            </p>
+    <main className="flex w-[90%] m-[-15vh_auto] flex-col gap-[15vh]">
+      {!isLoadingById && (
+        <div className="flex flex-col gap-[8vh] sm:flex-row justify-between">
+        <div className="flex flex-col-reverse sm:flex-row gap-[4vh] sm:gap-[10vh]">
+          <div className="flex flex-row gap-[2vh] max-h-150 overflow-auto sm:flex-col">
+            {
+              productById?.images?.map((img: any) => {
+                return <img className="w-25 h-35 cursor-pointer rounded-xl" onClick={() => setImage(img.images)} key={img.id} src={`https://store-api.softclub.tj/images/${img.images}`} />
+              })
+            }
           </div>
-          <div className="flex items-center gap-2 text-gray-600 text-sm">
-            <span>↩️</span>
-            <p>Return Delivery • Free 30 Days Delivery Returns</p>
+          <img className="w-full sm:w-125 h-150 rounded-xl" src={`https://store-api.softclub.tj/images/${image ? image : productById?.images?.slice(0, 1)[0]?.images}`} />
+        </div>
+        <div className="flex flex-col sm:w-[44%] gap-[4vh] items-start">
+          <h1 className="text-2xl font-semibold">{productById?.productName}</h1>
+          <div className="flex gap-5">
+            <Rating
+              name="text-feedback"
+              value={Math.floor(Math.random() * 5)}
+              readOnly
+              precision={0.5}
+              emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+            />
+            <p className="text-[#00000090]">(150 Reviews)</p>
+            <p className="text-[#00000090]">|</p>
+            <p className="text-[lime] text-md font-semibold">In Stock</p>
+          </div>
+          <h2 className="text-3xl font-bold">${productById?.discountPrice?.toFixed(2)}</h2>
+          <p className="text-[#00000090] border-b-2 pb-[2vh] w-full sm:w-[90%]">{productById?.description}</p>
+          <p className="flex gap-7 items-center text-xl"><span>Colours:</span> <div className={`bg-[${productById?.color}] mt-2 w-6 h-6 rounded-4xl`}></div></p>
+          {productById?.size && (<p className="flex gap-7 items-center text-xl"><span>Size:</span> <div className="p-[0.5vh_15px] rounded-xl border border-[#00000080] text-[#00000080]">{productById?.size}</div></p>)}
+          <div className="flex flex-wrap gap-4 items-center">
+            <div className="flex">
+              <button onClick={() => {
+                if(quty>0) {
+                  setQuty(quty-1)
+                }
+              }} className="p-[2vh_20px] border border-[#00000090] text-[#00000090] cursor-pointer rounded-l-xl"><Minus /></button>
+              <p className="p-[2vh_50px] border-t border-t-[#00000090] border-b border-b-[#00000090]">{quty}</p>
+              <button onClick={() => setQuty(quty+1)} className="p-[2vh_20px] border border-[#DB4444] bg-[#DB4444] text-white cursor-pointer rounded-r-xl"><Plus /></button>
+            </div>
+            <button onClick={() => {
+              if (token) {
+                AddProductToCart(productById?.id)
+                navigate("/checkout")
+              }
+              else {
+                navigate("/register")
+              }
+            }} className="sm:p-[2vh_60px] p-[2vh_100px] border border-[#DB4444] bg-[#DB4444] font-semibold text-white cursor-pointer rounded-xl">Buy Now</button>
+            <button className="p-[2vh] border border-[#00000090] text-[#00000090] cursor-pointer rounded-xl"><Heart /></button>
+          </div>
+          <div className="flex flex-col sm:w-[90%]">
+            <div className="p-[3vh_5%] flex justify-between items-center rounded-t-xl border-2 border-[#00000090]">
+              <Van size={60} />
+              <div className="flex flex-col gap-[1vh] w-[70%] sm:w-[80%]">
+                <h1 className="font-bold text-[16px]">Free Delivery</h1>
+                <p>Enter your postal code for Delivery Availability</p>
+              </div>
+            </div>
+            <div className="p-[3vh_5%] flex justify-between items-center rounded-b-xl border-2 border-[#00000090]">
+              <RefreshCcw size={60} />
+              <div className="flex flex-col gap-[1vh] w-[70%] sm:w-[80%]">
+                <h1 className="font-bold text-[16px]">Return Delivery</h1>
+                <p>Free 30 Days Delivery Returns. Details</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      )}
+      {isLoadingById && (<CircularProgress className="m-[5vh_auto]" size={80} />)}
+    </main>
   );
 };
 

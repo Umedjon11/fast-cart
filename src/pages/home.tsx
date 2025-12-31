@@ -9,11 +9,13 @@ import { useNavigate } from 'react-router';
 import { useCategories } from '../store/categories';
 import Boombox from "../assets/JBL_BOOMBOX_2_HERO_020_x1 (1) 1.png"
 import { useCart } from '../store/cart';
+import { useSubCategory } from '../store/subCategory';
 
 const Home = () => {
 
   const { products, GetProducts, isLoading } = useProducts((state: any) => state)
   const { categories, GetCateries } = useCategories((state: any) => state)
+  const { subCategories, isLoadingSubCategory, GetSubCategories } = useSubCategory((state: any) => state)
   const { AddProductToCart } = useCart((state: any) => state)
 
   const token = GetToken()
@@ -25,21 +27,19 @@ const Home = () => {
   useEffect(() => {
     GetProducts()
     GetCateries()
+    GetSubCategories()
   }, [])
 
   return (
     <main className="flex flex-col gap-[15vh] w-[90%] m-[-25vh_auto_-10vh_auto]">
       <section className="flex flex-col gap-[5vh] sm:flex-row items-center justify-between">
-        <aside className="flex flex-col pr-14 border-r pt-[3vh] pb-[3vh] border-r-[#0000001A] gap-[2vh]">
-          <p>Woman's Fashion</p>
-          <p>Men's Fashion</p>
-          <p>Electronics</p>
-          <p>Home & LifeStyle</p>
-          <p>Medicine</p>
-          <p>Sports & Outdoor</p>
-          <p>Baby's & Toys</p>
-          <p>Groceries & Pets</p>
-          <p>Health & Beauty</p>
+        <aside className="hidden sm:flex flex-col pr-14 border-r pt-[3vh] w-[15%] pb-[3vh] border-r-[#0000001A] gap-[2vh]">
+          {
+            subCategories.slice(0, 9).map((sub: any) => {
+              <p key={sub.id} className='cursor-pointer line-clamp-1'>{sub.subCategoryName}</p>
+            })
+          }
+          {isLoadingSubCategory && (<CircularProgress className='m-auto' size={50} />)}
         </aside>
         <Swiper
         cssMode={true}
@@ -52,90 +52,90 @@ const Home = () => {
       >
         <SwiperSlide style={{backgroundImage: "url(https://www.shutterstock.com/image-illustration/iphone-15-pro-max-render-260nw-2410630323.jpg)", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
           <aside className='flex flex-col gap-[4vh] pl-[4%] items-start w-full'>
-            <div className='flex w-[20%] gap-5 items-center'>
+            <div className='flex sm:w-[20%] gap-5 items-center'>
               <div className='w-[15%]'>
                 <img className='w-7.5 h-7.5' src='https://upload.wikimedia.org/wikipedia/commons/a/a5/Apple_gray_logo.png' />
               </div>
               <p className='text-[14px] font-semibold'>Iphone 11 Pro Max</p>
             </div>
-            <h1 className='text-6xl/[10vh] text-start font-bold w-[35%]'>Up to 10% off Voucher</h1>
-            <button className='flex gap-4 cursor-pointer'>  
-              <h2 className='text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
+            <h1 className='text-2xl sm:text-6xl/[10vh] text-start font-bold sm:w-[35%]'>Up to 10% off Voucher</h1>
+            <button onClick={() => navigate("/products")} className='flex gap-4 cursor-pointer'>  
+              <h2 className='sm:text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
               <ArrowRight />
             </button>
           </aside>
         </SwiperSlide>
         <SwiperSlide style={{backgroundImage: "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7qXRAuYbMnBeT8L2iS1N3vqNLk6NEWyLvQQ&s)", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
           <aside className='flex flex-col gap-[4vh] pl-[4%] items-start w-full'>
-            <div className='flex w-[20%] gap-5 items-center'>
+            <div className='flex sm:w-[20%] gap-5 items-center'>
               <div className='w-[15%]'>
                 <img className='w-7.5 h-7.5' src='https://upload.wikimedia.org/wikipedia/commons/a/a5/Apple_gray_logo.png' />
               </div>
               <p className='text-[14px] font-semibold'>Iphone 14 Pro Max</p>
             </div>
-            <h1 className='text-6xl/[10vh] text-start font-bold w-[35%]'>Up to 15% off Voucher</h1>
-            <button className='flex gap-4 cursor-pointer'>  
-              <h2 className='text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
+            <h1 className='text-2xl sm:text-6xl/[10vh] text-start font-bold sm:w-[35%]'>Up to 15% off Voucher</h1>
+            <button onClick={() => navigate("/products")} className='flex gap-4 cursor-pointer'>  
+              <h2 className='sm:text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
               <ArrowRight />
             </button>
           </aside>
         </SwiperSlide>
         <SwiperSlide style={{backgroundImage: "url(https://www.indiaistore.com/files/uploads/products/iphone-15-pro/iphone-15-new/1-d.jpg)", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
           <aside className='flex flex-col gap-[4vh] pl-[4%] items-start w-full'>
-            <div className='flex w-[20%] gap-5 items-center'>
+            <div className='flex sm:w-[20%] gap-5 items-center'>
               <div className='w-[15%]'>
                 <img className='w-7.5 h-7.5' src='https://upload.wikimedia.org/wikipedia/commons/a/a5/Apple_gray_logo.png' />
               </div>
               <p className='text-[14px] font-semibold'>Iphone 15 Pro Max</p>
             </div>
-            <h1 className='text-6xl/[10vh] text-start font-bold w-[35%]'>Up to 20% off Voucher</h1>
-            <button className='flex gap-4 cursor-pointer'>  
-              <h2 className='text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
+            <h1 className='text-2xl sm:text-6xl/[10vh] text-start font-bold sm:w-[35%]'>Up to 20% off Voucher</h1>
+            <button onClick={() => navigate("/products")} className='flex gap-4 cursor-pointer'>  
+              <h2 className='sm:text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
               <ArrowRight />
             </button>
           </aside>
         </SwiperSlide>
         <SwiperSlide style={{backgroundImage: "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-PSRtURuhkYROY06mzw_-EIpGuAkcfARSyw&s)", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
           <aside className='flex flex-col gap-[4vh] pl-[4%] items-start w-full'>
-            <div className='flex w-[20%] gap-5 items-center'>
+            <div className='flex sm:w-[20%] gap-5 items-center'>
               <div className='w-[15%]'>
                 <img className='w-7.5 h-7.5' src='https://upload.wikimedia.org/wikipedia/commons/a/a5/Apple_gray_logo.png' />
               </div>
               <p className='text-[14px] font-semibold'>Iphone 16 Pro </p>
             </div>
-            <h1 className='text-6xl/[10vh] text-start font-bold w-[35%]'>Up to 5% off Voucher</h1>
-            <button className='flex gap-4 cursor-pointer'>  
-              <h2 className='text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
+            <h1 className='text-2xl sm:text-6xl/[10vh] text-start font-bold sm:w-[35%]'>Up to 5% off Voucher</h1>
+            <button onClick={() => navigate("/products")} className='flex gap-4 cursor-pointer'>  
+              <h2 className='sm:text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
               <ArrowRight />
             </button>
           </aside>
         </SwiperSlide>
         <SwiperSlide style={{backgroundImage: "url(https://s1.dmcdn.net/v/Z0cZU1e_7UigN_A2B/x1080)", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
           <aside className='flex flex-col gap-[4vh] pl-[4%] items-start w-full'>
-            <div className='flex w-[20%] gap-5 items-center'>
+            <div className='flex sm:w-[20%] gap-5 items-center'>
               <div className='w-[15%]'>
                 <img className='w-7.5 h-7.5' src='https://upload.wikimedia.org/wikipedia/commons/a/a5/Apple_gray_logo.png' />
               </div>
               <p className='text-[14px] font-semibold'>Iphone 17 Pro Max</p>
             </div>
-            <h1 className='text-6xl/[10vh] text-start font-bold w-[35%]'>Up to 10% off Voucher</h1>
-            <button className='flex gap-4 cursor-pointer'>  
-              <h2 className='text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
+            <h1 className='text-2xl sm:text-6xl/[10vh] text-start font-bold sm:w-[35%]'>Up to 10% off Voucher</h1>
+            <button onClick={() => navigate("/products")} className='flex gap-4 cursor-pointer'>  
+              <h2 className='sm:text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
               <ArrowRight />
             </button>
           </aside>
         </SwiperSlide>
         <SwiperSlide style={{backgroundImage: "url(https://i.ytimg.com/vi/bAtPuYR8Ulk/maxresdefault.jpg)", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
           <aside className='flex flex-col gap-[4vh] pl-[4%] items-start w-full'>
-            <div className='flex w-[20%] gap-5 items-center'>
+            <div className='flex sm:w-[20%] gap-5 items-center'>
               <div className='w-[15%]'>
                 <img className='w-7.5 h-7.5' src='https://upload.wikimedia.org/wikipedia/commons/a/a5/Apple_gray_logo.png' />
               </div>
               <p className='text-[14px] font-semibold'>Iphone 17 Air</p>
             </div>
-            <h1 className='text-6xl/[10vh] text-start font-bold w-[35%]'>Up to 10% off Voucher</h1>
-            <button className='flex gap-4 cursor-pointer'>  
-              <h2 className='text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
+            <h1 className='text-2xl sm:text-6xl/[10vh] text-start font-bold sm:w-[35%]'>Up to 10% off Voucher</h1>
+            <button onClick={() => navigate("/products")} className='flex gap-4 cursor-pointer'>  
+              <h2 className='sm:text-xl pb-[1vh] border-b-2 items-center'>Shop Now</h2>
               <ArrowRight />
             </button>
           </aside>
@@ -146,7 +146,7 @@ const Home = () => {
         <h1 className='pl-4 border-l-8 rounded-l-[5px] text-[#DB4444] font-bold text-xl border-l-[#DB4444] pt-[1vh] pb-[1vh]'>Today's</h1>
         <aside className='flex w-full justify-between'>
           <div className='flex gap-4 items-center'>
-            <h1 className='text-3xl font-bold'>Flash Sales</h1>
+            <h1 className='text-xl sm:text-3xl font-bold'>Flash Sales</h1>
           </div>
           <div className='flex gap-4'>
             <button onClick={() => SwiperRef.current.swiper.slidePrev()} className='p-4 rounded-4xl cursor-pointer bg-[#F5F5F5] '><ChevronLeft /></button>
@@ -155,7 +155,8 @@ const Home = () => {
         </aside>
         <Swiper
           ref={SwiperRef}
-          slidesPerView={4}
+          slidesPerView={1}
+          breakpoints={{700:{slidesPerView: 4}}}
           spaceBetween={30}
           centeredSlides={true}
           modules={[Pagination]}
@@ -163,10 +164,10 @@ const Home = () => {
         >
           {
             products?.map((prod: IProduct) => {
-              return <SwiperSlide key={prod.id} className='w-[30%]'>
+              return <SwiperSlide key={prod.id} className='w-full sm:w-[30%]'>
                 <div className="flex hover:*:flex hover:transition-all duration-1000 flex-col w-full items-start text-start gap-[2vh]">
                   <h2 className='absolute mt-[2vh] ml-4 bg-[#DB4444] p-[1vh_15px] text-white font-semibold rounded-xl'>-{Math.floor(100 - prod.price/(prod.discountPrice/100))}%</h2>
-                  <div className='absolute mt-[2vh] flex-col ml-65 flex gap-[2vh]'>
+                  <div className='absolute mt-[2vh] flex-col ml-75 sm:ml-65 flex gap-[2vh]'>
                     <button onClick={() => {
                       if (token) {
                         navigate("/wishlist")
@@ -175,7 +176,7 @@ const Home = () => {
                         navigate("/register")
                       }
                     }} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Heart /></button>
-                    <button className='bg-[white] cursor-pointer p-2 rounded-4xl'><Eye /></button>
+                    <button  onClick={() => navigate(`/info/${prod.id}`)} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Eye /></button>
                   </div>
                   <div className='w-full h-62.5'><img className="rounded-2xl bg-[#F5F5F5]" src={`https://store-api.softclub.tj/images/${prod.image}`} /></div>
                   <button onClick={() => {
@@ -213,7 +214,7 @@ const Home = () => {
         <h1 className='pl-4 border-l-8 rounded-l-[5px] text-[#DB4444] font-bold text-xl border-l-[#DB4444] pt-[1vh] pb-[1vh]'>Categories</h1>
         <aside className='flex w-full justify-between'>
           <div className='flex gap-4 items-center'>
-            <h1 className='text-3xl font-bold'>Browse By Category</h1>
+            <h1 className='text-xl sm:text-3xl font-bold'>Browse By Category</h1>
           </div>
           <div className='flex gap-4'>
             <button onClick={() => CategoriesSwiperRef.current.swiper.slidePrev()} className='p-4 rounded-4xl cursor-pointer bg-[#F5F5F5] '><ChevronLeft /></button>
@@ -222,7 +223,8 @@ const Home = () => {
         </aside>
         <Swiper
           ref={CategoriesSwiperRef}
-          slidesPerView={4}
+          slidesPerView={1}
+          breakpoints={{700:{slidesPerView: 4}}}
           spaceBetween={30}
           centeredSlides={true}
           modules={[Pagination]}
@@ -240,16 +242,16 @@ const Home = () => {
       </section>
       <section className='flex flex-col gap-[4vh] items-start'>
         <h1 className='pl-4 border-l-8 rounded-l-[5px] text-[#DB4444] font-bold text-xl border-l-[#DB4444] pt-[1vh] pb-[1vh]'>This Month</h1>
-        <aside className='flex w-full items-center gap-[67%] justify-between'>
-        <h1 className='text-3xl font-bold'>Best Selling Products</h1>
-        <button onClick={() => navigate("/products")} className='bg-[#DB4444] font-semibold text-xl text-white p-[2vh_40px] m-[0_auto] cursor-pointer'>View All</button>
+        <aside className='flex w-full items-center gap-[17%] sm:gap-[67%] justify-between'>
+        <h1 className='text-xl w-[40%] sm:w-fit sm:text-3xl font-bold'>Best Selling Products</h1>
+        <button onClick={() => navigate("/products")} className='bg-[#DB4444] font-semibold sm:text-xl text-white p-[2vh_40px] m-[0_auto] cursor-pointer'>View All</button>
         </aside>
-        <aside className="w-full flex gap-[4vh_2%]">
+        <aside className="w-full flex flex-wrap gap-[8vh_1%]">
           {
             products?.slice(0, 4).map((prod: IProduct) => {
-                return <div key={prod.id} className="flex hover:*:flex hover:transition-all w-[24%] duration-1000 flex-col items-start text-start gap-[2vh]">
+                return <div key={prod.id} className="flex hover:*:flex hover:transition-all w-full sm:w-[24%] duration-1000 flex-col items-start text-start gap-[2vh]">
                   <h2 className='absolute mt-[2vh] ml-4 bg-[#DB4444] p-[1vh_15px] text-white font-semibold rounded-xl'>-{Math.floor(100 - prod.price/(prod.discountPrice/100))}%</h2>
-                  <div className='absolute mt-[2vh] flex-col ml-65 flex gap-[2vh]'>
+                  <div className='absolute mt-[2vh] flex-col ml-74 sm:ml-68 flex gap-[2vh]'>
                     <button onClick={() => {
                       if (token) {
                         navigate("/wishlist")
@@ -258,7 +260,7 @@ const Home = () => {
                         navigate("/register")
                       }
                     }} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Heart /></button>
-                    <button className='bg-[white] cursor-pointer p-2 rounded-4xl'><Eye /></button>
+                    <button  onClick={() => navigate(`/info/${prod.id}`)} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Eye /></button>
                   </div>
                   <div className='w-full h-62.5'><img className="rounded-2xl h-62.5 w-full bg-[#F5F5F5]" src={`https://store-api.softclub.tj/images/${prod.image}`} /></div>
                   <button onClick={() => {
@@ -268,7 +270,7 @@ const Home = () => {
                     else {
                       navigate("/register")
                     }
-                  }} className='font-semibold rounded-b-2xl bg-black p-[1vh_8%] w-[21.1%] absolute mt-[29vh] cursor-pointer text-white adding hidden'>Add Cart</button>
+                  }} className='font-semibold rounded-b-2xl bg-black p-[1vh_35%] sm:p-[1vh_8%] w-[90%] sm:w-[21.1%] absolute mt-[29vh] cursor-pointer text-white adding hidden'>Add Cart</button>
                   <h1 className='text-2xl font-semibold'>{prod.productName}</h1>
                   <div className="flex gap-4">
                       <p className="text-[#DB4444] font-semibold text-[15px]">${prod.discountPrice}</p>
@@ -324,9 +326,9 @@ const Home = () => {
         <aside className="w-full flex-wrap flex gap-[8vh_1%]">
           {
             products?.slice(0, 8).map((prod: IProduct) => {
-                return <div key={prod.id} className="flex hover:*:flex hover:transition-all w-[24%] duration-1000 flex-col items-start text-start gap-[2vh]">
+                return <div key={prod.id} className="flex hover:*:flex hover:transition-all w-full sm:w-[24%] duration-1000 flex-col items-start text-start gap-[2vh]">
                   <h2 className='absolute mt-[2vh] ml-4 bg-[#DB4444] p-[1vh_15px] text-white font-semibold rounded-xl'>-{Math.floor(100 - prod.price/(prod.discountPrice/100))}%</h2>
-                  <div className='absolute mt-[2vh] flex-col ml-65 flex gap-[2vh]'>
+                  <div className='absolute mt-[2vh] flex-col ml-74 sm:ml-68 flex gap-[2vh]'>
                     <button onClick={() => {
                       if (token) {
                         navigate("/wishlist")
@@ -335,7 +337,7 @@ const Home = () => {
                         navigate("/register")
                       }
                     }} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Heart /></button>
-                    <button className='bg-[white] cursor-pointer p-2 rounded-4xl'><Eye /></button>
+                    <button onClick={() => navigate(`/info/${prod.id}`)} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Eye /></button>
                   </div>
                   <div className='w-full h-75.5'><img className="rounded-2xl h-75.5 w-full bg-[#F5F5F5]" src={`https://store-api.softclub.tj/images/${prod.image}`} /></div>
                   <button onClick={() => {
@@ -345,7 +347,7 @@ const Home = () => {
                     else {
                       navigate("/register")
                     }
-                  }} className='font-semibold rounded-b-2xl bg-black p-[1vh_8%] w-[21.6%] absolute mt-[36vh] cursor-pointer text-white adding hidden'>Add Cart</button>
+                  }} className='font-semibold rounded-b-2xl bg-black p-[1vh_36%] sm:p-[1vh_8%] w-[90%] sm:w-[21.6%] absolute mt-[36vh] cursor-pointer text-white adding hidden'>Add Cart</button>
                   <h1 className='text-2xl font-semibold'>{prod.productName}</h1>
                   <div className="flex gap-4">
                       <p className="text-[#DB4444] font-semibold text-[15px]">${prod.discountPrice}</p>
@@ -400,7 +402,7 @@ const Home = () => {
           </div>
         </aside>
       </section>
-      <section className='flex justify-between flex-col gap-[4vh] sm:flex-row'>
+      <section className='flex justify-between flex-col gap-[5vh] sm:flex-row'>
         <div className='flex flex-col gap-[1vh] items-center sm:w-[30%] w-full'>
           <div className='p-6 rounded-full bg-[black] text-white'><Van size={40} /></div>
           <h1 className='text-2xl font-semibold'>FREE AND FAST DELIVERY</h1>

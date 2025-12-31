@@ -18,7 +18,9 @@ export interface IProduct {
 
 export const useProducts = create((set) => ({
     isLoading: true,
+    isLoadingById: true,
     products: [],
+    productById: {},
     GetProducts: async () => {
         set(() => ({isLoading: true}))
         set(() => ({products: []}))
@@ -29,5 +31,17 @@ export const useProducts = create((set) => ({
         } catch (error: any) {
             set(() => ({isLoading: false}))
         }
-    }
+    },
+    GetProductsById: async (id: number) => {
+        set(() => ({isLoadingById: false}))
+        set(() => ({productById: {}}))
+        try {
+            const { data } = await axios.get(`https://store-api.softclub.tj/Product/get-product-by-id?id=${id}`)
+            set(() => ({isLoadingById: false}))
+            set(() => ({productById: data.data}))
+        } catch (error: any) {
+            set(() => ({isLoadingById: false}))
+            set(() => ({productById: {}}))
+        }
+    },
 }))

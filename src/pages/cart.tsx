@@ -6,7 +6,7 @@ import { X } from "lucide-react"
 
 const Cart = () => {
 
-  const { cartProducts, GetCartProducts, isLoadingCart, RemoveFromCart, RemoveAll } = useCart((state: any) => state)
+  const { cartProducts, GetCartProducts, isLoadingCart, RemoveFromCart, RemoveAll, totalPrice } = useCart((state: any) => state)
 
   const navigate = useNavigate()
 
@@ -69,9 +69,9 @@ const Cart = () => {
         </div>
         <div className="p-4 rounded-md flex flex-col gap-[2vh] w-full sm:w-100 border-2">
           <h1 className="font-bold text-xl">Cart Total</h1>
-          <p className="flex justify-between">Subtotal: <span>$0</span></p>
+          <p className="flex justify-between">Subtotal: <span>${totalPrice}</span></p>
           <p className="flex justify-between border-b-2 pb-[2vh]">Shipping: <span>Free</span></p>
-          <p className="flex font-bold justify-between">Total: <span>$0</span></p>
+          <p className="flex font-bold justify-between">Total: <span>${totalPrice}</span></p>
           <button onClick={() => navigate("/checkout")} className="bg-[#DB4444] font-semibold text-white p-[2vh_0] cursor-pointer w-[80%] m-[0_auto] rounded-md">Procees to checkout</button>
         </div>
       </div>
