@@ -77,50 +77,53 @@ const About = () => {
         </div>
       </div>
 
-      <div className="flex justify-between px-[30px] mt-[100px]">
-        <div className="flex flex-col  w-[700px] items-center bg-white p-5 rounded-xl shadow-md max-w-sm mx-auto">
-          <img
-            src={ImageCardAbout}
-            alt="Tom Cruise"
-            className="object-cover mb-4"
-          />
-          <h1 className="text-xl font-semibold mb-1">Tom Cruise</h1>
-          <p className="text-gray-500 text-sm mb-4">Founder & Chairman</p>
-          <div className="flex gap-4">
-            <Twitter className="text-blue-500 hover:text-blue-700 cursor-pointer" />
-            <Instagram className="text-pink-500 hover:text-pink-700 cursor-pointer" />
-            <Linkedin className="text-blue-700 hover:text-blue-900 cursor-pointer" />
-          </div>
-        </div>
-        <div className="flex flex-col w-[700px] items-center bg-white p-5 rounded-xl shadow-md max-w-sm mx-auto">
-          <img
-            src={ImageCardAbout}
-            alt="Tom Cruise"
-            className="object-cover mb-4"
-          />
-          <h1 className="text-xl font-semibold mb-1">Tom Cruise</h1>
-          <p className="text-gray-500 text-sm mb-4">Founder & Chairman</p>
-          <div className="flex gap-4">
-            <Twitter className="text-blue-500 hover:text-blue-700 cursor-pointer" />
-            <Instagram className="text-pink-500 hover:text-pink-700 cursor-pointer" />
-            <Linkedin className="text-blue-700 hover:text-blue-900 cursor-pointer" />
-          </div>
-        </div>
-        <div className="flex flex-col w-[700px] items-center bg-white p-5 rounded-xl shadow-md max-w-sm mx-auto">
-          <img
-            src={ImageCardAbout}
-            alt="Tom Cruise"
-            className="object-cover mb-4"
-          />
-          <h1 className="text-xl font-semibold mb-1">Tom Cruise</h1>
-          <p className="text-gray-500 text-sm mb-4">Founder & Chairman</p>
-          <div className="flex gap-4">
-            <Twitter className="text-blue-500 hover:text-blue-700 cursor-pointer" />
-            <Instagram className="text-pink-500 hover:text-pink-700 cursor-pointer" />
-            <Linkedin className="text-blue-700 hover:text-blue-900 cursor-pointer" />
-          </div>
-        </div>
-      </div>
+     <div className="flex flex-col md:flex-row justify-between px-[30px] mt-[100px] gap-6">
+  <div className="flex flex-col w-full md:w-[700px] items-center bg-white p-5 rounded-xl shadow-md max-w-sm mx-auto">
+    <img
+      src={ImageCardAbout}
+      alt="Tom Cruise"
+      className="object-cover mb-4"
+    />
+    <h1 className="text-xl font-semibold mb-1">Tom Cruise</h1>
+    <p className="text-gray-500 text-sm mb-4">Founder & Chairman</p>
+    <div className="flex gap-4">
+      <Twitter className="text-blue-500 hover:text-blue-700 cursor-pointer" />
+      <Instagram className="text-pink-500 hover:text-pink-700 cursor-pointer" />
+      <Linkedin className="text-blue-700 hover:text-blue-900 cursor-pointer" />
+    </div>
+  </div>
+
+  <div className="flex flex-col w-full md:w-[700px] items-center bg-white p-5 rounded-xl shadow-md max-w-sm mx-auto">
+    <img
+      src={ImageCardAbout}
+      alt="Tom Cruise"
+      className="object-cover mb-4"
+    />
+    <h1 className="text-xl font-semibold mb-1">Tom Cruise</h1>
+    <p className="text-gray-500 text-sm mb-4">Founder & Chairman</p>
+    <div className="flex gap-4">
+      <Twitter className="text-blue-500 hover:text-blue-700 cursor-pointer" />
+      <Instagram className="text-pink-500 hover:text-pink-700 cursor-pointer" />
+      <Linkedin className="text-blue-700 hover:text-blue-900 cursor-pointer" />
+    </div>
+  </div>
+
+  <div className="flex flex-col w-full md:w-[700px] items-center bg-white p-5 rounded-xl shadow-md max-w-sm mx-auto">
+    <img
+      src={ImageCardAbout}
+      alt="Tom Cruise"
+      className="object-cover mb-4"
+    />
+    <h1 className="text-xl font-semibold mb-1">Tom Cruise</h1>
+    <p className="text-gray-500 text-sm mb-4">Founder & Chairman</p>
+    <div className="flex gap-4">
+      <Twitter className="text-blue-500 hover:text-blue-700 cursor-pointer" />
+      <Instagram className="text-pink-500 hover:text-pink-700 cursor-pointer" />
+      <Linkedin className="text-blue-700 hover:text-blue-900 cursor-pointer" />
+    </div>
+  </div>
+</div>
+
 
       <div className="flex flex-col md:flex-row  justify-center items-center gap-[35px] p-5 mt-[120px]">
         <div className="flex flex-col items-center bg-white p-6 rounded-xl  text-center hover:shadow-lg transition-shadow duration-300 w-[380px]">
