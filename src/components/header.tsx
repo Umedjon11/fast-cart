@@ -103,7 +103,7 @@ const Header = () => {
                 handleClose()
               }}><User /> Account</MenuItem>
               <MenuItem className="flex gap-6 items-center" onClick={() => {
-                navigation("/order")
+                navigation("/")
                 handleClose()
               }}><ShoppingBag /> My Order</MenuItem>
               <div className="block sm:hidden">
