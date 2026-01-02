@@ -17,6 +17,7 @@ export interface IProduct {
 } 
 
 export const useProducts = create((set) => ({
+    category: "",
     isLoading: true,
     isLoadingById: true,
     products: [],
@@ -44,4 +45,18 @@ export const useProducts = create((set) => ({
             set(() => ({productById: {}}))
         }
     },
+    setCategory: (newCat: string) => {
+        set(() => ({category: newCat}))
+    },
+    GetFiteredProducts: async (brandId: string, subCategory: string, minPrice: string, maxPrice: string) => {
+        set(() => ({isLoading: true}))
+        set(() => ({products: []}))
+        try {
+            const { data } = await axios.get(`https://store-api.softclub.tj/Product/get-products?${minPrice != "" ? `MinPrice=${minPrice}` : ""}${maxPrice != "" ? `&MaxPrice=${maxPrice}` : ""}${brandId != "" ? `&BrandId=${brandId}` : ""}${subCategory != "" ? `&SubcategoryId=${subCategory}` : ""}`)
+            set(() => ({isLoading: false}))
+            set(() => ({products: data.data.products}))
+        } catch (error: any) {
+            set(() => ({isLoading: false}))
+        }
+    }
 }))

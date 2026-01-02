@@ -2,44 +2,49 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Mousewheel, Keyboard, Autoplay } from 'swiper/modules';
 import { ArrowRight, ChevronLeft, ChevronRight, Eye, Headset, Heart, ShieldCheck, StarIcon, Van } from 'lucide-react';
 import { useProducts, type IProduct } from '../store/products';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CircularProgress, Rating } from '@mui/material';
 import { GetToken } from '../../utils/axios';
 import { useNavigate } from 'react-router';
 import { useCategories } from '../store/categories';
 import Boombox from "../assets/JBL_BOOMBOX_2_HERO_020_x1 (1) 1.png"
 import { useCart } from '../store/cart';
-import { useSubCategory } from '../store/subCategory';
+import { AddToWish, GetWishList, RemoveFromWish } from '../api/request/wishlist';
 
 const Home = () => {
 
-  const { products, GetProducts, isLoading } = useProducts((state: any) => state)
+  const { products, GetProducts, isLoading, setCategory } = useProducts((state: any) => state)
   const { categories, GetCateries } = useCategories((state: any) => state)
-  const { subCategories, isLoadingSubCategory, GetSubCategories } = useSubCategory((state: any) => state)
   const { AddProductToCart } = useCart((state: any) => state)
-
+  const Time = 5184000000
+  const [data, setData] = useState(new Date(Time))
   const token = GetToken()
   const navigate = useNavigate()
-
+  const AccwishList = GetWishList()
   const SwiperRef = useRef<null | any>(null)
   const CategoriesSwiperRef = useRef<null | any>(null)
+  const [liked, setLiked] = useState(AccwishList)
 
   useEffect(() => {
     GetProducts()
     GetCateries()
-    GetSubCategories()
+    setInterval(() => {
+      setData(new Date(+data.getTime()-1000))
+    }, 1000)
   }, [])
 
   return (
     <main className="flex flex-col gap-[15vh] w-[90%] m-[-25vh_auto_-10vh_auto]">
       <section className="flex flex-col gap-[5vh] sm:flex-row items-center justify-between">
-        <aside className="hidden sm:flex flex-col pr-14 border-r pt-[3vh] w-[15%] pb-[3vh] border-r-[#0000001A] gap-[2vh]">
+        <aside className="hidden sm:flex flex-col items-start pr-14 border-r pt-[3vh] w-[19%] pb-[3vh] border-r-[#0000001A] gap-[2vh]">
           {
-            subCategories.slice(0, 9).map((sub: any) => {
-              <p key={sub.id} className='cursor-pointer line-clamp-1'>{sub.subCategoryName}</p>
+            categories?.slice(0, 11).map((cat: any) => {
+              return <button onClick={() => {
+                setCategory(cat.id)
+                navigate("/products")
+              }} key={cat.id} className='cursor-pointer text-start line-clamp-1'>{cat.categoryName}</button>
             })
           }
-          {isLoadingSubCategory && (<CircularProgress className='m-auto' size={50} />)}
         </aside>
         <Swiper
         cssMode={true}
@@ -170,12 +175,19 @@ const Home = () => {
                   <div className='absolute mt-[2vh] flex-col ml-75 sm:ml-65 flex gap-[2vh]'>
                     <button onClick={() => {
                       if (token) {
-                        navigate("/wishlist")
+                        if (liked && liked.some((prodd: any) => prodd.id == prod.id)) {
+                          RemoveFromWish(prod.id)
+                        }
+                        else {
+                          AddToWish(prod)
+                        }
+                        const NewWish = GetWishList()
+                        setLiked(NewWish)
                       }
                       else {
                         navigate("/register")
                       }
-                    }} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Heart /></button>
+                    }} className={liked && liked.some((prodd: any) => prodd.id == prod.id) ? "bg-[red] text-white cursor-pointer p-2 rounded-4xl" : "bg-[white] cursor-pointer p-2 rounded-4xl"}><Heart /></button>
                     <button  onClick={() => navigate(`/info/${prod.id}`)} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Eye /></button>
                   </div>
                   <div className='w-full h-62.5'><img className="rounded-2xl bg-[#F5F5F5]" src={`https://store-api.softclub.tj/images/${prod.image}`} /></div>
@@ -195,7 +207,7 @@ const Home = () => {
                   <div className='flex gap-3 items-center'>
                     <Rating
                       name="text-feedback"
-                      value={Math.floor(Math.random() * 5)}
+                      value={4}
                       readOnly
                       precision={0.5}
                       emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
@@ -233,7 +245,7 @@ const Home = () => {
           {
             categories?.map((cat: any) => {
               return <SwiperSlide key={cat.id} className='w-10 border-2 cursor-pointer border-[#0000004D] p-5 rounded-2xl'>
-                <img className='rounded-2xl' src={`https://store-api.softclub.tj/images/${cat.categoryImage}`} />
+                  <img className='rounded-2xl' src={`https://store-api.softclub.tj/images/${cat.categoryImage}`} />
               </SwiperSlide>
             })
           }
@@ -254,12 +266,19 @@ const Home = () => {
                   <div className='absolute mt-[2vh] flex-col ml-74 sm:ml-68 flex gap-[2vh]'>
                     <button onClick={() => {
                       if (token) {
-                        navigate("/wishlist")
+                        if (liked && liked.some((prodd: any) => prodd.id == prod.id)) {
+                          RemoveFromWish(prod.id)
+                        }
+                        else {
+                          AddToWish(prod)
+                        }
+                        const NewWish = GetWishList()
+                        setLiked(NewWish)
                       }
                       else {
                         navigate("/register")
                       }
-                    }} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Heart /></button>
+                    }} className={liked && liked.some((prodd: any) => prodd.id == prod.id) ? "bg-[red] text-white cursor-pointer p-2 rounded-4xl" : "bg-[white] cursor-pointer p-2 rounded-4xl"}><Heart /></button>
                     <button  onClick={() => navigate(`/info/${prod.id}`)} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Eye /></button>
                   </div>
                   <div className='w-full h-62.5'><img className="rounded-2xl h-62.5 w-full bg-[#F5F5F5]" src={`https://store-api.softclub.tj/images/${prod.image}`} /></div>
@@ -279,7 +298,7 @@ const Home = () => {
                   <div className='flex gap-3 items-center'>
                     <Rating
                       name="text-feedback"
-                      value={Math.floor(Math.random() * 5)}
+                      value={4}
                       readOnly
                       precision={0.5}
                       emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
@@ -298,19 +317,19 @@ const Home = () => {
           <h1 className='text-3xl sm:text-5xl font-bold'>Enhance Your Music Experience</h1>
           <div className='flex gap-3 items-center'>
             <div className='bg-[white] text-black text-center p-[12px_20px] rounded-4xl'>
-              <h1 className='font-bold'>5</h1>
+              <h1 className='font-bold'>{data.getDate()}</h1>
               <p className='text-[12px] font-semibold'>Days</p>
             </div>
             <div className='bg-[white] text-black text-center p-[12px_16px] rounded-4xl'>
-              <h1 className='font-bold'>23</h1>
+              <h1 className='font-bold'>{data.getHours()}</h1>
               <p className='text-[12px] font-semibold'>Hours</p>
             </div>
             <div className='bg-[white] text-black text-center p-[12px_10px] rounded-4xl'>
-              <h1 className='font-bold'>59</h1>
+              <h1 className='font-bold'>{data.getMinutes()}</h1>
               <p className='text-[12px] font-semibold'>Minutes</p>
             </div>
             <div className='bg-[white] text-black text-center p-[12px_10px] rounded-4xl'>
-              <h1 className='font-bold'>35</h1>
+              <h1 className='font-bold'>{data.getSeconds()}</h1>
               <p className='text-[12px] font-semibold'>Seconds</p>
             </div>
           </div>
@@ -331,12 +350,19 @@ const Home = () => {
                   <div className='absolute mt-[2vh] flex-col ml-74 sm:ml-68 flex gap-[2vh]'>
                     <button onClick={() => {
                       if (token) {
-                        navigate("/wishlist")
+                        if (liked && liked.some((prodd: any) => prodd.id == prod.id)) {
+                          RemoveFromWish(prod.id)
+                        }
+                        else {
+                          AddToWish(prod)
+                        }
+                        const NewWish = GetWishList()
+                        setLiked(NewWish)
                       }
                       else {
                         navigate("/register")
                       }
-                    }} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Heart /></button>
+                    }} className={liked && liked.some((prodd: any) => prodd.id == prod.id) ? "bg-[red] text-white cursor-pointer p-2 rounded-4xl" : "bg-[white] cursor-pointer p-2 rounded-4xl"}><Heart /></button>
                     <button onClick={() => navigate(`/info/${prod.id}`)} className='bg-[white] cursor-pointer p-2 rounded-4xl'><Eye /></button>
                   </div>
                   <div className='w-full h-75.5'><img className="rounded-2xl h-75.5 w-full bg-[#F5F5F5]" src={`https://store-api.softclub.tj/images/${prod.image}`} /></div>
@@ -356,7 +382,7 @@ const Home = () => {
                   <div className='flex gap-3 items-center'>
                     <Rating
                       name="text-feedback"
-                      value={Math.floor(Math.random() * 5)}
+                      value={4}
                       readOnly
                       precision={0.5}
                       emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
