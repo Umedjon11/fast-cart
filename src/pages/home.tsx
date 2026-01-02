@@ -16,8 +16,8 @@ const Home = () => {
   const { products, GetProducts, isLoading, setCategory } = useProducts((state: any) => state)
   const { categories, GetCateries } = useCategories((state: any) => state)
   const { AddProductToCart } = useCart((state: any) => state)
-  const Time = localStorage.getItem("time")
-  const [data, setData] = useState(new Date(Time ? +Time : 0))
+  const Time = 5184000000
+  const [data, setData] = useState(new Date(Time))
   const token = GetToken()
   const navigate = useNavigate()
   const AccwishList = GetWishList()
@@ -29,11 +29,7 @@ const Home = () => {
     GetProducts()
     GetCateries()
     setInterval(() => {
-      localStorage.setItem("time", (+data.getTime()-1000)+"")
-      const newTime = localStorage.getItem("time")
-      if (newTime && +newTime > 0) {
-        setData(new Date(+newTime))
-      }
+      setData(new Date(+data.getTime()-1000))
     }, 1000)
   }, [])
 

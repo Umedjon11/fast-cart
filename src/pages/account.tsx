@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router"
 import * as Yup from 'yup';
 import { useProfile } from "../store/profile";
+import { GetToken } from "../../utils/axios";
 
 const Account = () => {
 
@@ -12,6 +13,7 @@ const Account = () => {
   const { Profile, GetProfile, EditProfile } = useProfile((state: any) => state)
 
   const navigate = useNavigate()
+  const token = GetToken()
 
   const formShema = Yup.object().shape({
     firstName: Yup.string()
@@ -35,10 +37,10 @@ const Account = () => {
 
   const {setFieldValue, handleChange, handleSubmit, resetForm, errors, touched, values} = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: ""
+      firstName: Profile?.firstName,
+      lastName: Profile?.lastName,
+      email: Profile?.email,
+      phoneNumber: Profile?.phoneNumber
     },
     validationSchema: formShema,
     onSubmit: async (values: any) => {
@@ -75,6 +77,9 @@ const Account = () => {
   useEffect(() => {
     GetProfile()
     resetForm()
+    if (!token) {
+      navigate("/register")
+    }
   }, [])
 
   return (
