@@ -12,7 +12,7 @@ export const useSubCategory = create((set) => ({
         try {
            const { data } = await axios.get("https://store-api.softclub.tj/SubCategory/get-sub-category")
            set(() => ({isLoadingSubCategory: false})) 
-           set(() => ({subCategories: data.data}))
+           set(() => ({subCategories: data.data.slice(0, 30)}))
         } catch (error) {
             set(() => ({isLoadingSubCategry: false}))
             set(() => ({subCategories: []}))

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { Drawer, Menu, MenuItem } from "@mui/material"
 import { GetToken } from "../../utils/axios"
 import { useCart } from "../store/cart"
+import { GetWishList } from "../api/request/wishlist"
 
 const Header = () => {
   const location = useLocation()
@@ -13,6 +14,8 @@ const Header = () => {
   const { cartProducts, GetCartProducts } = useCart((state: any) => state)
 
   const [open, setOpen] = useState(false);
+  
+  const AccwishList = GetWishList()
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -60,7 +63,15 @@ const Header = () => {
                 <input className="outline-0" placeholder="What are you looking for?" />
                 <Search className="cursor-pointer" />
             </div>
-            <Heart className="hidden sm:block" />
+            <Heart onClick={() => {
+              if(token) {
+                navigation("/wishlist")
+              } 
+              else {
+                navigation("/register")
+              }
+            }} className="hidden sm:block" />
+            {AccwishList && AccwishList.length > 0 && (<p className="hidden sm:block bg-[red] absolute ml-[3.4%] sm:ml-[21.2%] mt-[-3vh] text-white p-[2px_7px] text-[10px] rounded-4xl">{AccwishList.length}</p>)}
             <ShoppingCart onClick={() => {
               if(token) {
                 navigation("/cart")

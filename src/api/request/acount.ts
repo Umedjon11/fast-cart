@@ -1,6 +1,7 @@
 import { Bounce, toast } from "react-toastify";
 import axios from 'axios'
-import { SetToken } from './../../../utils/axios';
+import { SetToken, SetUserName } from './../../../utils/axios';
+import { SetNewWihList } from "./wishlist";
 
 export const LogIn = async (account: {userName: string, password: string}) => {
     try {
@@ -17,9 +18,10 @@ export const LogIn = async (account: {userName: string, password: string}) => {
             transition: Bounce,
         });
         SetToken(data.data)
+        SetUserName(account.userName)
+        SetNewWihList()
         return data.data
     } catch (error: any) {
-        console.log(error.response.data)
         toast.error(error.response.data.errors+"", {
             position: "top-right",
             autoClose: 3000,
