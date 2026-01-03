@@ -102,7 +102,7 @@ const Info = () => {
           {
             products?.slice(0, 4).map((prod: IProduct) => {
                 return <div key={prod.id} className="flex hover:*:flex hover:transition-all w-full sm:w-[24%] duration-1000 flex-col items-start text-start gap-[2vh]">
-                  <h2 className='absolute mt-[2vh] ml-4 bg-[#DB4444] p-[1vh_15px] text-white font-semibold rounded-xl'>-{Math.floor(100 - prod.price/(prod.discountPrice/100))}%</h2>
+                  {prod.hasDiscount && (<h2 className='absolute mt-[2vh] ml-4 bg-[#DB4444] p-[1vh_15px] text-white font-semibold rounded-xl'>{Math.floor(100 - prod.price/(prod.discountPrice/100))}%</h2>)}
                   <div className='absolute mt-[2vh] flex-col ml-74 sm:ml-68 flex gap-[2vh]'>
                     <button onClick={() => {
                       if (token) {
@@ -125,8 +125,8 @@ const Info = () => {
                   }} className='font-semibold rounded-b-2xl bg-black p-[1vh_36%] sm:p-[1vh_8%] w-[90%] sm:w-[21.6%] absolute mt-[36vh] cursor-pointer text-white adding hidden'>Add Cart</button>
                   <h1 className='text-2xl font-semibold'>{prod.productName}</h1>
                   <div className="flex gap-4">
-                      <p className="text-[#DB4444] font-semibold text-[15px]">${prod.discountPrice}</p>
-                      <p className='font-semibold text-[15px] line-through text-[#000000c0]'>${prod.price}</p>
+                      <p className="text-[#DB4444] font-semibold text-[15px]">${prod.hasDiscount ? prod.discountPrice : prod.price}</p>
+                      {prod.hasDiscount && (<p className='font-semibold text-[15px] line-through text-[#000000c0]'>${prod.price}</p>)}
                   </div>
                   <div className='flex gap-3 items-center'>
                     <Rating

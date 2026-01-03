@@ -9,7 +9,7 @@ const Contact = () => {
         <Link to="/" className="text-[#00000090]">Home /</Link>
         <p>Cantact</p>
       </section>
-      <section className="flex flex-col gap-[4vh] sm:flex-row justify-between">
+      <section className="flex flex-col gap-[4vh] items-start sm:flex-row justify-between">
         <aside className="w-full sm:w-[35%] shadow-2xl rounded-xl p-[4vh_30px] flex flex-col gap-[4vh]">
           <aside className="flex flex-col gap-[2vh] pb-[4vh]">
             <div className="flex gap-5 items-center">
@@ -38,7 +38,7 @@ const Contact = () => {
           <TextField className="w-full sm:w-[31%]"  id="outlined-basic" label="Name" variant="outlined" />
           <TextField className="w-full sm:w-[31%]"  id="outlined-basic" label="Email" variant="outlined" />
           <TextField className="w-full sm:w-[31%]"  id="outlined-basic" label="Phone" variant="outlined" />
-          <TextField id="outlined-basic" label="Your message" className="sm:h-[47vh]" multiline fullWidth variant="outlined" />
+          <TextField id="outlined-basic" label="Your message" className="sm:min-h-[47vh]" multiline fullWidth variant="outlined" />
           <button className="text-white p-[2vh_40px] bg-[#DB4444] rounded-xl ml-auto">Send Message</button>
         </aside>
       </section>
